@@ -1,0 +1,58 @@
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+
+	// 전역변수로 pointer와 입력 String을 처리하면서 불필요한 매개변수 전달과 Split을 막을 수 있다.
+	// But 문제에 국한된 해결책이고 재사용성이 높은 코드는 아니다.
+	static int pointer = 0;
+	static String quadTree;
+
+	public static void main(String args[]) throws NumberFormatException, IOException {
+
+		Scanner sc = new Scanner(System.in);
+
+		int T = sc.nextInt();
+		sc.nextLine();
+		while (T-- > 0) {
+			pointer = 0;
+			quadTree = sc.nextLine();
+			System.out.println(reverse());
+		}
+
+		sc.close();
+	}
+
+	public static String reverse() {
+
+		// 첫 항이 x가 아닌 경우
+		if (quadTree.charAt(pointer) != 'x') {
+
+			pointer++;
+			return quadTree.charAt(pointer - 1) + ""; //w
+
+			// 첫 항이 x인 경우
+		} else {
+
+			pointer++;
+
+			// 4조각을 담는 그릇
+			String rqt[] = new String[4];
+
+			// 왼쪽 위 조각
+			rqt[0] = reverse();
+
+			// 오른쪽 위 조각
+			rqt[1] = reverse();
+
+			// 왼쪽 아래 조각
+			rqt[2] = reverse();
+
+			// 오른쪽 아래 조각
+			rqt[3] = reverse();
+
+			return 'x' + rqt[2] + rqt[3] + rqt[0] + rqt[1];
+		}
+	}
+}
